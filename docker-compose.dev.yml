@@ -1,0 +1,13 @@
+services:
+  web:
+    build:
+      context: .
+    ports:
+      - 8000:8000
+    volumes:
+      - type: volume
+        source: realworld
+        target: /app/data
+volumes:
+  realworld:
+    external: true      
