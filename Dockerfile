@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # pull the official base image
-FROM python:3.10.8-slim-bullseye
+FROM python:3.11.0-slim-bullseye
 
 # set work directory
 WORKDIR /app
