@@ -9,6 +9,8 @@ class Article(models.Model):
     description = models.TextField()
     body = models.TextField()
     tagList = TaggableManager(verbose_name="tagList",blank=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
