@@ -44,15 +44,15 @@ class ArticleModelTests(TestCase):
         body_can_empty = article._meta.get_field('body').blank
         self.assertEqual(body_can_empty, False)
 
-    def test_taglist_label(self):
+    def test_tags_label(self):
         article = Article.objects.get(id=1)
-        tagList_label = article._meta.get_field('tagList').verbose_name
-        self.assertEqual(tagList_label, 'tagList')
+        tagList_label = article._meta.get_field('tags').verbose_name
+        self.assertEqual(tagList_label, 'tags')
 
-    def test_tagList_is_optional(self):
+    def test_tags_is_optional(self):
         article = Article.objects.get(id=1)
-        tagList_can_empty = article._meta.get_field('tagList').blank
-        self.assertEqual(tagList_can_empty, True)
+        tags_can_empty = article._meta.get_field('tags').blank
+        self.assertEqual(tags_can_empty, True)
 
     def test_text_field_max_length_is_100(self):
         text_field_max_length = TEXT_MAX_LENGTH
@@ -68,10 +68,10 @@ class ArticleModelTests(TestCase):
         createdAt_label = article._meta.get_field('createdAt').verbose_name
         self.assertEqual(createdAt_label, 'createdAt')
 
-    def test_createdAt_set_now_first_saved(self):
+    def test_createdAt_set_now_first_time_created(self):
         article = Article.objects.get(id=1)
-        set_now_first_saved = article._meta.get_field('createdAt').auto_now_add
-        self.assertEqual(set_now_first_saved, True)
+        set_now_first_time_created = article._meta.get_field('createdAt').auto_now_add
+        self.assertEqual(set_now_first_time_created, True)
 
     def test_updatedAt_label(self):
         article = Article.objects.get(id=1)

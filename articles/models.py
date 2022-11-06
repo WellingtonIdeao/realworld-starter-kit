@@ -8,7 +8,7 @@ class Article(models.Model):
     title = models.CharField(max_length=TEXT_MAX_LENGTH)
     description = models.TextField()
     body = models.TextField()
-    tagList = TaggableManager(verbose_name="tagList",blank=True)
+    tags = TaggableManager(verbose_name="tags",blank=True)
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
 
