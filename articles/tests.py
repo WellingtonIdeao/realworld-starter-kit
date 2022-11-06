@@ -1,6 +1,6 @@
 from django.test import TestCase
 from .models import Article
-from .models import MAX_LENGTH as TEXT_MAXLENGTH
+from .models import TEXT_MAX_LENGTH
 
 
 class ArticleModelTests(TestCase):
@@ -55,7 +55,7 @@ class ArticleModelTests(TestCase):
         self.assertEqual(tagList_can_empty, True)
 
     def test_text_field_max_length_is_100(self):
-        text_field_max_length = TEXT_MAXLENGTH
+        text_field_max_length = TEXT_MAX_LENGTH
         self.assertEqual(text_field_max_length, 100)
 
     def test_article_string_representation(self):
