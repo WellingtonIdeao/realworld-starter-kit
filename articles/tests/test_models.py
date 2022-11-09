@@ -1,7 +1,8 @@
 from django.test import TestCase
+from django.db.models import CASCADE
 from django.contrib.auth.models import User
-from .models import Article
-from .models import TEXT_MAX_LENGTH
+from ..models import Article
+from ..models import TEXT_MAX_LENGTH
 
 
 class ArticleModelTests(TestCase):
@@ -92,7 +93,22 @@ class ArticleModelTests(TestCase):
     def test_author_is_required(self):
         author_can_empty = self.article._meta.get_field('author').blank
         self.assertEqual(author_can_empty, False) 
-          
+    
+    def test_author_on_delete_is_cascade(self):
+        author_on_delete =  self.article._meta.get_field('author').remote_field.on_delete
+        self.assertEqual(author_on_delete, CASCADE)
+
+    def test_relation_name_between_author_article(self):
+        relation_name = self.article._meta.get_field('author').remote_field.related_name
+        self.assertEqual(relation_name, 'articles')
+    
+    def test_filter_name_to_query_article_in_author(self):
+        filter_name = self.article._meta.get_field('author').remote_field.related_query_name
+        self.assertEqual(filter_name, 'article')
+
+
+
+
     
 
 
