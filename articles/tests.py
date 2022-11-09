@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.contrib.auth.models import User
 from .models import Article
 from .models import TEXT_MAX_LENGTH
 
@@ -7,7 +8,8 @@ class ArticleModelTests(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.article = Article.objects.create(title='title', description='description', body='body')
+        user = User.objects.create_user('username','test@mail.com', 'password')
+        cls.article = Article.objects.create(title='title', description='description', body='body', author=user)
         
     def test_title_label(self):
         title_label = self.article._meta.get_field('title').verbose_name
@@ -66,3 +68,36 @@ class ArticleModelTests(TestCase):
     def test_updateAt_set_now_every_time_saved(self):  
         set_now_every_time_saved = self.article._meta.get_field('updatedAt').auto_now
         self.assertEqual(set_now_every_time_saved, True)
+
+    def test_favorited_label(self):
+        favorited_label = self.article._meta.get_field('favorited').verbose_name
+        self.assertEqual(favorited_label, 'favorited')
+
+    def test_favorited_default_is_false(self):
+        favorited_default = self.article._meta.get_field('favorited').default
+        self.assertEqual(favorited_default, False)
+
+    def test_favoritesCount_label(self):
+        favoritesCount_label = self.article._meta.get_field('favoritesCount').verbose_name
+        self.assertEqual(favoritesCount_label, 'favoritesCount')
+
+    def test_favoritesCount_default_is_zero(self):
+        favoritesCount_default = self.article._meta.get_field('favoritesCount').default
+        self.assertEqual(favoritesCount_default, 0)
+
+    def test_author_label(self):
+        author_label = self.article._meta.get_field('author').verbose_name
+        self.assertEqual(author_label, 'author')   
+
+    def test_author_is_required(self):
+        author_can_empty = self.article._meta.get_field('author').blank
+        self.assertEqual(author_can_empty, False) 
+          
+    
+
+
+
+     
+
+
+
