@@ -23,3 +23,11 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Profile(models.Model):
+    author = models.OneToOneField(User, related_name='profile' ,on_delete=models.CASCADE)
+    bio = models.TextField()
+    image = models.URLField()
+    following = models.BooleanField(default=False)
+
