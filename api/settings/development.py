@@ -25,3 +25,4 @@ DATABASES = {
 }
 # add a custom name for test database
 DATABASES['default'].update({'TEST': {'NAME': 'test_realworld_db'}})
+

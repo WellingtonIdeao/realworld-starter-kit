@@ -26,7 +26,7 @@ class ArticleModelTests(TestCase):
 
     def test_title_is_required(self):
         title_can_empty = self.article._meta.get_field('title').blank
-        self.assertEqual(title_can_empty, False)
+        self.assertFalse(title_can_empty)
 
     def test_has_description(self):
         has_description = hasattr(self.article, 'description')
@@ -38,7 +38,7 @@ class ArticleModelTests(TestCase):
 
     def test_description_is_required(self):
         desc_can_empty = self.article._meta.get_field('description').blank
-        self.assertEqual(desc_can_empty, False)
+        self.assertFalse(desc_can_empty)
 
     def test_has_body(self):
         has_body = hasattr(self.article, 'body')
@@ -50,7 +50,7 @@ class ArticleModelTests(TestCase):
 
     def test_body_is_required(self):
         body_can_empty = self.article._meta.get_field('body').blank
-        self.assertEqual(body_can_empty, False)
+        self.assertFalse(body_can_empty)
 
     def test_has_tags(self):
         has_tags = hasattr(self.article, 'tags')
@@ -62,7 +62,7 @@ class ArticleModelTests(TestCase):
 
     def test_tags_is_optional(self):
         tags_can_empty = self.article._meta.get_field('tags').blank
-        self.assertEqual(tags_can_empty, True)
+        self.assertTrue(tags_can_empty)
 
     def test_text_field_max_length_is_100(self):
         self.assertEqual(TEXT_MAX_LENGTH, 100)
@@ -80,7 +80,7 @@ class ArticleModelTests(TestCase):
 
     def test_createdAt_set_now_first_time_created(self):
         set_now_first_time_created = self.article._meta.get_field('createdAt').auto_now_add
-        self.assertEqual(set_now_first_time_created, True)
+        self.assertTrue(set_now_first_time_created)
 
     def test_has_updatedAt(self):
         has_updatedAt = hasattr(self.article, 'updatedAt')
@@ -92,7 +92,7 @@ class ArticleModelTests(TestCase):
 
     def test_updateAt_set_now_every_time_saved(self):  
         set_now_every_time_saved = self.article._meta.get_field('updatedAt').auto_now
-        self.assertEqual(set_now_every_time_saved, True)
+        self.assertTrue(set_now_every_time_saved)
 
     def test_has_favorited(self):
         has_favorited = hasattr(self.article, 'favorited')
@@ -104,7 +104,7 @@ class ArticleModelTests(TestCase):
 
     def test_favorited_default_is_false(self):
         favorited_default = self.article._meta.get_field('favorited').default
-        self.assertEqual(favorited_default, False)
+        self.assertFalse(favorited_default)
 
     def test_has_favoritesCount(self):
         has_favoritesCount = hasattr(self.article, 'favoritesCount')
@@ -128,7 +128,7 @@ class ArticleModelTests(TestCase):
 
     def test_author_is_required(self):
         author_can_empty = self.article._meta.get_field('author').blank
-        self.assertEqual(author_can_empty, False) 
+        self.assertFalse(author_can_empty) 
     
     def test_author_on_delete_is_cascade(self):
         author_on_delete =  self.article._meta.get_field('author').remote_field.on_delete
@@ -157,6 +157,10 @@ class ProfileModelTests(TestCase):
         author_label = self.profile._meta.get_field('author').verbose_name
         self.assertEqual(author_label, 'author')
 
+    def test_author_is_required(self):
+        author_can_empty = self.profile._meta.get_field('author').blank
+        self.assertFalse(author_can_empty)    
+
     def test_manager_name_for_profile_backward_relationship(self):
         related_manager_name = self.profile._meta.get_field('author').remote_field.related_name
         self.assertEqual(related_manager_name, 'profile')
@@ -173,9 +177,43 @@ class ProfileModelTests(TestCase):
         bio_label = self.profile._meta.get_field('bio').verbose_name
         self.assertEqual(bio_label, 'bio')
      
-    def test_bio_is_required(self):
+    def test_bio_is_optional(self):
         bio_can_empty = self.profile._meta.get_field('bio').blank
-        self.assertEqual(bio_can_empty, False)    
+        self.assertTrue(bio_can_empty)
+
+    def test_has_image(self):
+        has_image = hasattr(self.profile, 'image')
+        self.assertTrue(has_image)
+
+    def test_image_label(self):
+        image_label = self.profile._meta.get_field('image').verbose_name
+        self.assertEqual(image_label, 'image')
+     
+    def test_image_is_optional(self):
+        image_can_empty = self.profile._meta.get_field('image').blank
+        self.assertTrue(image_can_empty)
+
+    def test_image_max_length_is_100(self):
+        image_max_length = self.profile._meta.get_field('image').max_length
+        self.assertEqual(image_max_length, 100)            
+        
+
+    def test_has_following(self):
+        has_following = hasattr(self.profile, 'following')
+        self.assertTrue(has_following)
+    
+    def test_following_label(self):
+        following_label = self.profile._meta.get_field('following').verbose_name
+        self.assertEqual(following_label, 'following')
+
+    
+    def test_following_default_is_false(self):
+        following_default = self.profile._meta.get_field('following').default
+        self.assertFalse(following_default)
+
+
+
+    
 
     
 

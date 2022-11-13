@@ -27,7 +27,7 @@ class Article(models.Model):
 
 class Profile(models.Model):
     author = models.OneToOneField(User, related_name='profile' ,on_delete=models.CASCADE)
-    bio = models.TextField()
-    image = models.URLField()
+    bio = models.TextField(blank=True)
+    image = models.ImageField(upload_to="images", blank=True)
     following = models.BooleanField(default=False)
 
