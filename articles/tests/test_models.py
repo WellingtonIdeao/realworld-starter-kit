@@ -12,6 +12,22 @@ class ArticleModelTests(TestCase):
         user = User.objects.create_user('username','test@mail.com', 'password')
         cls.article = Article.objects.create(title='title', description='description', body='body', author=user)
         
+    def test_has_slug(self):
+        has_slug = hasattr(self.article, 'slug')
+        self.assertTrue(has_slug)
+
+    def test_slug_label(self):
+        slug_label = self.article._meta.get_field('slug').verbose_name
+        self.assertEqual(slug_label, 'slug')
+
+    def test_slug_max_length_is_50(self):
+        slug_max_length = self.article._meta.get_field('slug').max_length
+        self.assertEqual(slug_max_length, 50)
+
+    def test_slug_is_required(self):
+        slug_can_empty = self.article._meta.get_field('slug').blank
+        self.assertFalse(slug_can_empty)
+
     def test_has_title(self):
         has_title = hasattr(self.article, 'title')
         self.assertTrue(has_title)
@@ -210,11 +226,6 @@ class ProfileModelTests(TestCase):
     def test_following_default_is_false(self):
         following_default = self.profile._meta.get_field('following').default
         self.assertFalse(following_default)
-
-
-
-    
-
     
 
 class UserModelTests(TestCase):

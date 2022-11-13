@@ -6,6 +6,7 @@ TEXT_MAX_LENGTH = 100
 
 
 class Article(models.Model):
+    slug = models.SlugField(max_length=50)
     title = models.CharField(max_length=TEXT_MAX_LENGTH)
     description = models.TextField()
     body = models.TextField()
