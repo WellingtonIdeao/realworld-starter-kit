@@ -1,6 +1,10 @@
 from django.urls import path
-from .views import article_list
+from rest_framework.urlpatterns import format_suffix_patterns
+from .views import ArticleList, ArticleDetail
+
 
 urlpatterns = [
-    path('articles/', article_list),
+    path('articles/', ArticleList.as_view() ),
+    path('articles/<int:pk>/', ArticleDetail.as_view())
 ]
+urlpatterns = format_suffix_patterns(urlpatterns)

@@ -1,6 +1,15 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-# Create your views here.
+from django.shortcuts import get_object_or_404
+from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
+from .models import Article
+from .serializers import ArticleSerializer
 
-def article_list(request):
-   return HttpResponse("Article List")
+class ArticleList(ListAPIView):
+
+   queryset = Article.objects.all()
+   serializer_class = ArticleSerializer
+
+class ArticleDetail(RetrieveAPIView):
+
+   queryset = Article.objects.all()
+   serializer_class = ArticleSerializer
